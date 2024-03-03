@@ -93,8 +93,11 @@ class Cart {
     }
     
     func clear() {
-        for index in 0 ... products.count {
-            products.remove(at: index)
+        var isEmpty = false
+        for index in 0..<products.count {
+            if isEmpty == true {
+                products.remove(at: index)
+            }
         }
     }
     
@@ -149,7 +152,7 @@ struct ResponseFromServer {
     ]
     
     func get3Products() -> [ProductInfo] {
-        return sourceProducts.shuffled().suffix(3)
+        return sourceProducts.shuffled().suffix(0)
     }
 }
 
@@ -372,19 +375,26 @@ screen.printCheck(cart: cart)
 
 // Початок коду сценарію для Пункт 2
 
-/*
+
  
 print("\nSCENARIO 2:\n")
 
 // Користувач додає три товари у кошик
+
 cart.products = dataMapper.products(from: responseFromServer.get3Products())
+
 // Користувач натискає десь на екрані кнопку "Очистити кошик" (Clear)
+
 cart.clear()
 
 // Користувач натискає кнопку "Оформити замовлення", щоб побачити чек
-screen.printCheck(cart: cart)
 
- */
+if cart.products.isEmpty == true {
+    print("Кошик пустий. Для оформлення замовлення додайте хоча б один товар")
+} else {
+    screen.printCheck(cart: cart)
+}
+ 
 
 // Кінець коду сценарію для Пункт 2
 
